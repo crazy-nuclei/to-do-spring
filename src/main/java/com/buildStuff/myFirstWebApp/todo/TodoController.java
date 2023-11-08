@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -47,4 +48,31 @@ public class TodoController {
 		todoService.addTodo(todo.getUsername(), todo.getDescription(), todo.getTargetDate().plusYears(1), todo.getDone());
 		return "redirect:list-todos";
 	}
+	
+	@RequestMapping(path="delete-todo/{id}", method=RequestMethod.GET)
+	public String deleteTodo(@PathVariable int id) {
+		
+		todoService.deleteTodo(id);
+		return "redirect:/list-todos";
+	}
+	
+	@RequestMapping(path="update-todo/{id}", method=RequestMethod.GET)
+	public String getUpdateTodoPage(@PathVariable int id, ModelMap model) {
+		Todo todo = todoService.findById(id);
+		model.addAttribute("todo", todo);
+		return "todo";
+	}
+	
+	@RequestMapping(path="update-todo/{id}", method=RequestMethod.POST)
+	public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			return "todo";
+		}
+		
+		todoService.updateTodo(todo);
+		return "redirect:/list-todos";
+	}
+	
+	
 }
