@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jakarta.validation.Valid;
@@ -56,14 +57,14 @@ public class TodoController {
 		return "redirect:/list-todos";
 	}
 	
-	@RequestMapping(path="update-todo/{id}", method=RequestMethod.GET)
-	public String getUpdateTodoPage(@PathVariable int id, ModelMap model) {
+	@RequestMapping(path="update-todo", method=RequestMethod.GET)
+	public String getUpdateTodoPage(@RequestParam int id, ModelMap model) {
 		Todo todo = todoService.findById(id);
 		model.addAttribute("todo", todo);
 		return "todo";
 	}
 	
-	@RequestMapping(path="update-todo/{id}", method=RequestMethod.POST)
+	@RequestMapping(path="update-todo", method=RequestMethod.POST)
 	public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
 		
 		if (result.hasErrors()) {
@@ -73,6 +74,5 @@ public class TodoController {
 		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
 	}
-	
 	
 }
