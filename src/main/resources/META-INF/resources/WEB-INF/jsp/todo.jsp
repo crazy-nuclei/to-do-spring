@@ -8,6 +8,9 @@
 	</head>
 	
 	<body>
+	
+		<jsp:include page="navbar.jsp" />
+	
 		<div class='container'>
 			<h2>Add Todo Details </h2>
 			

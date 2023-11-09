@@ -5,6 +5,8 @@
 	</head>
 	
 	<body>
+	
+		<jsp:include page="navbar.jsp" />
 		
 		<div class="container">
 			<h2>Welcome to Todo App, ${name } </h2>
